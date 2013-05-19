@@ -48,7 +48,7 @@ $('#message-form').submit(function(e) {
   $.post('/messages', msg);
 });
 
-$('#username').on('blur keypress', function(e) {
+$('#username').on('blur keydown', function(e) {
   var $elem = $(this);
   
   if (e.which != 13 && e.which != 0)
