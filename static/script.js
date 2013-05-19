@@ -1,23 +1,13 @@
-var channel = new goog.appengine.Channel(state.token),
-    socket = channel.open();
+var pusher = new Pusher('e44daeeff8725fc3f830');
+var channel = pusher.subscribe('chat');
 
-socket.onopen = function () {
-  console.info('Socket open');
-};
+pusher.connection.bind('connected', function() {
+  state.socketId = pusher.connection.socket_id;
+});
 
-socket.onmessage = function (message) {
-  console.log('Socket message:', message);
-  var msg = JSON.parse(message.data);
-  addMessage(msg);
-};
-
-socket.onerror = function (error) {
-  console.error('Socket error:', error);
-};
-
-socket.onclose = function (error) {
-  console.info('Socket closed');
-};
+channel.bind('message', function(data) {
+  addMessage(data);
+});
 
 function addMessage(msg) {
   state.messages = state.messages.slice(0, 3);
@@ -35,6 +25,8 @@ function updateChatbox() {
       .prepend($('<span class="username">').text(msg.username))
       .appendTo($msgList);
   });
+  
+  $('#messages').show();
 }
 
 function updatePlaceholder() {
@@ -48,12 +40,12 @@ $('#message-form').submit(function(e) {
   e.preventDefault();
   
   var $search = $('#search'),
-      msg = {username: state.username, content: $search.val()};
+      msg = {content: $search.val(), socket_id: state.socketId};
   
   if (msg.content == '')
     return;
   
-  if (msg.username == 'pseudo')
+  if (state.username == 'pseudo')
     return;
   
   $search.val('');
@@ -77,9 +69,9 @@ $('#username').on('blur keypress', function(e) {
   if (e.type != 'blur')
     $elem.blur();
   
-  state.username = $elem.text();
   updatePlaceholder();
   
+  state.username = $elem.text();
   $.cookie('usr', state.username, {expires: 365});
 });
 
