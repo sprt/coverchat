@@ -99,4 +99,4 @@ for plugin in app.plugins:
         plugin.json_dumps = custom_json_dumps
         break
 
-run(app=app, debug=True, server='gae')
+run(app=app, server='gae')
