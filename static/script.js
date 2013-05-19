@@ -29,13 +29,6 @@ function updateChatbox() {
   $('#messages').show();
 }
 
-function updatePlaceholder() {
-  if (state.username == 'pseudo')
-    $('#search').attr('placeholder', 'Veuillez changer votre pseudo →');
-  else
-    $('#search').removeAttr('placeholder');
-}
-
 $('#message-form').submit(function(e) {
   e.preventDefault();
   
@@ -69,10 +62,11 @@ $('#username').on('blur keypress', function(e) {
   if (e.type != 'blur')
     $elem.blur();
   
-  updatePlaceholder();
-  
   state.username = $elem.text();
   $.cookie('username', state.username, {expires: 365});
+  
+  if (state.username == 'pseudo')
+    $('#search').attr('placeholder', 'Veuillez changer votre pseudo →');
+  else
+    $('#search').removeAttr('placeholder');
 });
-
-updatePlaceholder();
