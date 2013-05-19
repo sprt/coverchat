@@ -18,8 +18,3 @@ handlers:
 inbound_services:
 - warmup
 - channel_presence
-
-skip_files:
-- ^(.*/)?app\.yaml$
-- ^(.*/)?.*\.py[co]$
-- ^(.*/)?\.*$
