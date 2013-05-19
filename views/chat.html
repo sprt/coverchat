@@ -14,7 +14,7 @@ var state = {
   username: '{{username}}',
   messages: [
     %for msg in messages:
-    {username: "{{msg['username']}}", content: "{{msg['content']}}"},
+    {username: '{{msg.username}}', content: '{{msg.content}}'},
     %end
   ]
 };
@@ -52,7 +52,7 @@ var state = {
     <div id="messages">
       <ul>
         %for msg in messages:
-        <li><span class="username">{{msg['username']}}</span>{{msg['content']}}
+        <li><span class="username">{{msg.username}}</span>{{msg.content}}
         %end
       </ul>
     </div>
