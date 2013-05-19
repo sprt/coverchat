@@ -1,10 +1,13 @@
+from datetime import datetime
+from json import dumps as json_dumps
 from os import environ
 from uuid import uuid4
 
 from google.appengine.api import channel
 from google.appengine.ext import ndb
 
-from bottle import abort, default_app, get, post, request, response, run, view
+from bottle import (abort, default_app, get, JSONPlugin, post, request,
+                    response, run, view)
 
 class Message(ndb.Model):
     username = ndb.StringProperty(required=True, indexed=False)
@@ -14,16 +17,15 @@ class Message(ndb.Model):
 class Client(ndb.Model):
     token = ndb.StringProperty(indexed=False)
 
-def get_json_messages():
-    messages = Message.query().order(-Message.date).fetch(4)
-    messages_json = []
-    
-    for msg in messages:
-        msg_dict = msg.to_dict()
-        msg_dict['date'] = msg.date.isoformat()
-        messages_json.append(msg_dict)
-    
-    return messages_json
+def custom_json_dumps(obj):
+    def custom_default(o):
+        if isinstance(o, ndb.Model):
+            return o.to_dict()
+        elif isinstance(o, datetime):
+            return o.isoformat()
+        else:
+            raise TypeError
+    return json_dumps(obj, default=custom_default)
 
 @ndb.transactional
 def update_or_insert_client(cid, token):
@@ -54,7 +56,7 @@ def get_chat():
     username = request.get_cookie('usr', 'pseudo')
     
     return {'app_version': environ['CURRENT_VERSION_ID'].split('.')[0],
-            'messages': get_json_messages(),
+            'messages': Message.query().order(-Message.date).fetch(4),
             'token': token,
             'username': username}
 
@@ -76,9 +78,7 @@ def post_messages():
     for client in Client.query():
         client_id = client.key.id()
         if client_id != request.get_cookie('cid'):  # Don't send to oneself
-            msg_json = msg.to_dict()
-            msg_json['date'] = msg.date.isoformat()
-            channel.send_message(client_id, json_dumps(msg_json))
+            channel.send_message(client_id, custom_json_dumps(msg))
 
 @post('/_ah/channel/connected/')
 def post_connected():
@@ -93,4 +93,10 @@ def get_warmup():
     pass
 
 app = default_app()
+
+for plugin in app.plugins:
+    if isinstance(plugin, JSONPlugin):
+        plugin.json_dumps = custom_json_dumps
+        break
+
 run(app=app, debug=True, server='gae')
