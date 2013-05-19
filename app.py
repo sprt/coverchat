@@ -7,14 +7,13 @@ from pusher import Pusher
 @get('/')
 @view('chat')
 def get_chat():
-    username = request.get_cookie('usr', 'pseudo')
     return {'app_version': environ['CURRENT_VERSION_ID'].split('.')[0],
             'dev': environ['SERVER_SOFTWARE'].startswith('Development'),
-            'username': username}
+            'username': request.get_cookie('username', 'pseudo')}
 
 @post('/messages')
 def post_messages():
-    username = request.get_cookie('usr', 'pseudo')
+    username = request.get_cookie('username', 'pseudo')
     content = request.forms.get('content')
     socket_id = request.forms.get('socket_id')
     
