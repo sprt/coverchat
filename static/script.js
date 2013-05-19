@@ -38,7 +38,7 @@ $('#message-form').submit(function(e) {
   if (msg.content == '')
     return;
   
-  if (state.username == 'pseudo')
+  if ($.cookie('username') == 'pseudo')
     return;
   
   $search.val('');
@@ -62,10 +62,9 @@ $('#username').on('blur keypress', function(e) {
   if (e.type != 'blur')
     $elem.blur();
   
-  state.username = $elem.text();
-  $.cookie('username', state.username, {expires: 365});
+  $.cookie('username', $elem.text(), {expires: 365});
   
-  if (state.username == 'pseudo')
+  if ($.cookie('username') == 'pseudo')
     $('#search').attr('placeholder', 'Veuillez changer votre pseudo →');
   else
     $('#search').removeAttr('placeholder');
