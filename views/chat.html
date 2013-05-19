@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<title>Google</title>
+
+<link rel="prerender" href="//www.google.be">
+<link rel="prefetch" href="//www.google.be">
+
+<link rel="icon" href="//www.google.be/favicon.ico">
+<link rel="stylesheet" href="/static/style.css?{{app_version}}">
+
+<script>
+var state = {
+  token: '{{token}}',
+  username: '{{username}}',
+  messages: [
+    %for msg in messages:
+    {username: "{{msg['username']}}", content: "{{msg['content']}}"},
+    %end
+  ]
+};
+</script>
+
+<script src="/_ah/channel/jsapi"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="/static/jquery.cookie.js"></script>
+
+<div id="navbar">
+  <ul>
+    <li><a href="//plus.google.com">+Vous</a>
+    <li><a href="/" style="color: #fff">Recherche</a>
+    <li><a href="//www.google.be/imghp">Images</a>
+    <li><a href="//maps.google.be">Maps</a>
+    <li><a href="//play.google.com/">Play</a>
+    <li><a href="//www.youtube.com/">YouTube</a>
+    <li><a href="//news.google.be/">Actualités</a>
+    <li><a href="//mail.google.com/">Gmail</a>
+    <li><a href="//drive.google.com/">Drive</a>
+    <li><a href="//www.google.be/calendar">Agenda</a>
+    <li><a href="//www.google.be/about/products/">Plus</a>
+  </ul>
+</div>
+
+<div id="mainbar">
+  <div id="google-logo">
+    <a href="//www.google.com" title="Afficher la page d'accueil de Google"></a>
+  </div>
+  
+  <form id="message-form">
+    <input id="search" type="text" autocomplete="off" autofocus spellcheck="false">
+    <button id="submit" type="submit"><span></span></button>
+    
+    <div id="messages">
+      <ul>
+        %for msg in messages:
+        <li><span class="username">{{msg['username']}}</span>{{msg['content']}}
+        %end
+      </ul>
+    </div>
+  </form>
+  
+  <form id="user-form">
+    <span contenteditable id="username">{{username}}</span>@gmail.com
+  </form>
+</div>
+
+<script src="/static/script.js?{{app_version}}"></script>
