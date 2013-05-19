@@ -1,18 +1,19 @@
-from os import environ
-
 from bottle import (abort, default_app, get, JSONPlugin, post, request,
                     response, run, view)
-from pusher import Pusher
 
 @get('/')
 @view('chat')
 def get_chat():
+    from os import environ
+    
     return {'app_version': environ['CURRENT_VERSION_ID'].split('.')[0],
             'dev': environ['SERVER_SOFTWARE'].startswith('Development'),
             'username': request.get_cookie('username', 'pseudo')}
 
 @post('/messages')
 def post_messages():
+    from pusher import Pusher
+    
     username = request.get_cookie('username', 'pseudo')
     content = request.forms.get('content')
     socket_id = request.forms.get('socket_id')
