@@ -72,7 +72,7 @@ $('#username').on('blur keypress', function(e) {
   updatePlaceholder();
   
   state.username = $elem.text();
-  $.cookie('usr', state.username, {expires: 365});
+  $.cookie('username', state.username, {expires: 365});
 });
 
 updatePlaceholder();
