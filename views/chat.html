@@ -52,7 +52,11 @@ var state = {
   </div>
   
   <form id="message-form">
-    <input id="search" type="text" autocomplete="off" autofocus spellcheck="false">
+    <input id="search" type="text" autocomplete="off" autofocus 
+      %if username == 'pseudo':
+      placeholder="Veuillez changer votre pseudo →"
+      %end
+      spellcheck="false">
     <button id="submit" type="submit"><span></span></button>
     
     <div id="messages" style="display: none">
