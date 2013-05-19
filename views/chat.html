@@ -8,19 +8,25 @@
 <link rel="icon" href="//www.google.be/favicon.ico">
 <link rel="stylesheet" href="/static/style.css?{{app_version}}">
 
+<script src="//js.pusher.com/2.0/pusher.min.js"></script>
+
+%if dev:
+<script>
+Pusher.log = function(message) {
+  console.log(message);
+};
+WEB_SOCKET_DEBUG = true;
+</script>
+%end
+
 <script>
 var state = {
-  token: '{{token}}',
   username: '{{username}}',
-  messages: [
-    %for msg in messages:
-    {username: '{{msg.username}}', content: '{{msg.content}}'},
-    %end
-  ]
+  messages: [],
+  socketId: null
 };
 </script>
 
-<script src="/_ah/channel/jsapi"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script src="/static/jquery.cookie.js"></script>
 
@@ -49,11 +55,8 @@ var state = {
     <input id="search" type="text" autocomplete="off" autofocus spellcheck="false">
     <button id="submit" type="submit"><span></span></button>
     
-    <div id="messages">
+    <div id="messages" style="display: none">
       <ul>
-        %for msg in messages:
-        <li><span class="username">{{msg.username}}</span>{{msg.content}}
-        %end
       </ul>
     </div>
   </form>
