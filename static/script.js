@@ -69,3 +69,8 @@ $('#username').on('blur keydown', function(e) {
   else
     $('#search').removeAttr('placeholder');
 });
+
+$(document).keydown(function(e) {
+  if (e.which == 27)
+    location.replace('//www.google.be/');
+});
