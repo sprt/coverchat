@@ -8,28 +8,6 @@
 <link rel="icon" href="//www.google.be/favicon.ico">
 <link rel="stylesheet" href="/static/style.css?{{app_version}}">
 
-<script src="//js.pusher.com/2.0/pusher.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.3.1/jquery.cookie.min.js"></script>
-
-%if dev:
-<script>
-Pusher.log = function(message) {
-  console.log(message);
-};
-WEB_SOCKET_DEBUG = true;
-</script>
-%end
-
-<script>
-var state = {
-  messages: [],
-  socketId: null
-};
-</script>
-
-<script src="/static/script.js?{{app_version}}"></script>
-
 <div id="navbar">
   <ul>
     <li><a href="//plus.google.com/">+Vous</a>
@@ -69,3 +47,25 @@ var state = {
     <span contenteditable id="username">{{username}}</span>@gmail.com
   </form>
 </div>
+
+<script src="//js.pusher.com/2.0/pusher.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.3.1/jquery.cookie.min.js"></script>
+
+%if dev:
+<script>
+Pusher.log = function(message) {
+  console.log(message);
+};
+WEB_SOCKET_DEBUG = true;
+</script>
+%end
+
+<script>
+var state = {
+  messages: [],
+  socketId: null
+};
+</script>
+
+<script src="/static/script.js?{{app_version}}"></script>
