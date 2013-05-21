@@ -38,7 +38,8 @@ $('#message-form').submit(function(e) {
   if (msg.content == '')
     return;
   
-  if ($.cookie('username') == 'pseudo')
+  if ($.cookie('username') == 'pseudo' ||
+      $.cookie('username') === null)
     return;
   
   $search.val('');
