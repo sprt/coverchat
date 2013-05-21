@@ -41,8 +41,7 @@ $(function() {
     if (msg.content == '')
       return;
     
-    if (msg.username == 'pseudo' ||
-        msg.username === null)
+    if (msg.username == 'pseudo' || msg.username === null)
       return;
     
     $search.val('');
