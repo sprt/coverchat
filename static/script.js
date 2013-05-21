@@ -82,8 +82,3 @@ $(document).keydown(function(e) {
   if (e.which == 27)
     location.replace('//www.google.be/');
 });
-
-if ($.cookie('username') == 'pseudo' || $.cookie('username') === null) {
-  $('#search').blur();
-  $('#search').attr('disabled', true);
-}
