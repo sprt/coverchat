@@ -62,8 +62,10 @@ $('#username').on('blur keydown', function(e) {
   if (!$elem.text())
     $elem.text('pseudo');
   
-  if (e.type != 'blur')
+  if (e.type != 'blur') {
     $elem.blur();
+    $('#search').focus();
+  }
   
   $.cookie('username', $elem.text(), {expires: 365});
   
