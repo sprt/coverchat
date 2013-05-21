@@ -27,9 +27,11 @@
     e.preventDefault();
     
     var $search = $('#search'),
-        msg = {content: $search.val(),
-               socket_id: state.socketId,
-               username: $.cookie('username')};
+        msg = {
+          content: $search.val(),
+          socket_id: state.socketId,
+          username: $.cookie('username')
+        };
     
     if (msg.content === '') {
       return;
