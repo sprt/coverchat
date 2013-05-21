@@ -53,30 +53,33 @@ $(function() {
   });
   
   $('#username').on('blur keydown', function(e) {
-    var $elem = $(this);
+    var $search = $('#search'),
+        $username = $(this),
+        username = $username.text();
     
     if (e.which != 13 && e.which != 0)
       return;
     
     e.preventDefault();
     
-    if (!$elem.text())
-      $elem.text('pseudo');
-    
-    if (e.type != 'blur') {
-      $elem.blur();
-      $('#search').focus();
+    if (username == '' || username.toLowerCase() == 'pseudo') {
+      username = $.cookie('username') || 'pseudo';
+      $username.text(username);
     }
     
-    $('#search').removeAttr('disabled');
-    $.cookie('username', $elem.text(), {expires: 365});
+    if (e.type != 'blur') { // pressed Enter
+      $username.blur();
+      $search.focus();
+    }
     
-    if ($.cookie('username') == 'pseudo') {
-      $('#search').blur();
-      $('#search').attr('disabled', true);
-      $('#search').attr('placeholder', 'Veuillez changer votre pseudo →');
+    if (username != 'pseudo') {
+      $search.attr('disabled', false);
+      $search.removeAttr('placeholder');
+      $.cookie('username', username, {expires: 365});
     } else {
-      $('#search').removeAttr('placeholder');
+      $search.blur(); // CSS will mess it up if we disable the <input> on focus
+      $search.attr('disabled', true);
+      $search.attr('placeholder', 'Veuillez changer votre pseudo →');
     }
   });
   
