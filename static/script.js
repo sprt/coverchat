@@ -75,10 +75,6 @@ $(function() {
       $search.attr('disabled', false);
       $search.removeAttr('placeholder');
       $.cookie('username', username, {expires: 365});
-    } else {
-      $search.blur(); // CSS will mess it up if we disable the <input> on focus
-      $search.attr('disabled', true);
-      $search.attr('placeholder', 'Veuillez changer votre pseudo →');
     }
   });
   
