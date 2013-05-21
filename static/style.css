@@ -95,7 +95,19 @@ input {
   outline: none;
 }
 
-#search:hover {
+#search::-moz-placeholder { /* Firefox 19+ */
+  color: #888;
+}
+
+#search:-ms-input-placeholder { /* IE 10+ */
+  color: #888;
+}
+
+#search::-webkit-input-placeholder {
+  color: #888;
+}
+
+#search:not([disabled]):hover {
   border: 1px solid #b9b9b9;
   border-top-color: #a0a0a0;
   box-shadow: inset 0 1px 2px #e6e6e6;

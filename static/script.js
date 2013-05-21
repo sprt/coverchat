@@ -68,16 +68,25 @@ $(function() {
       $('#search').focus();
     }
     
+    $('#search').removeAttr('disabled');
     $.cookie('username', $elem.text(), {expires: 365});
     
-    if ($.cookie('username') == 'pseudo')
+    if ($.cookie('username') == 'pseudo') {
+      $('#search').blur();
+      $('#search').attr('disabled', true);
       $('#search').attr('placeholder', 'Veuillez changer votre pseudo →');
-    else
+    } else {
       $('#search').removeAttr('placeholder');
+    }
   });
   
   $(document).keydown(function(e) {
     if (e.which == 27)
       location.replace('//www.google.be/');
   });
+  
+  if ($.cookie('username') == 'pseudo' || $.cookie('username') === null) {
+    $('#search').blur();
+    $('#search').attr('disabled', true);
+  }
 });
