@@ -33,13 +33,15 @@ $('#message-form').submit(function(e) {
   e.preventDefault();
   
   var $search = $('#search'),
-      msg = {content: $search.val(), socket_id: state.socketId};
+      msg = {content: $search.val(),
+             socket_id: state.socketId,
+             username: $.cookie('username')};
   
   if (msg.content == '')
     return;
   
-  if ($.cookie('username') == 'pseudo' ||
-      $.cookie('username') === null)
+  if (msg.username == 'pseudo' ||
+      msg.username === null)
     return;
   
   $search.val('');
