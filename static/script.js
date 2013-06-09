@@ -4,8 +4,7 @@
   'use strict';
   
   function updateChatbox() {
-    var $msgList = $('#messages ul');
-    $msgList.empty();
+    var $msgList = $('#messages ul').empty();
     
     $.each(state.messages, function(i, msg) {
       $('<li>')
@@ -33,11 +32,8 @@
           username: $.cookie('username')
         };
     
-    if (msg.content === '') {
-      return;
-    }
-    
-    if (msg.username === 'pseudo' || msg.username === null) {
+    if (msg.content === '' || msg.username === 'pseudo' ||
+        msg.username === null) {
       return;
     }
     
@@ -49,15 +45,15 @@
   });
   
   $('#username').on('blur keydown', function(e) {
-    var $search = $('#search'),
-        $username = $(this),
-        username = $username.text();
-    
     if (e.which !== 13 && e.which !== 0) {
       return;
     }
     
     e.preventDefault();
+    
+    var $search = $('#search'),
+        $username = $(this),
+        username = $username.text();
     
     if (username === '' || username.toLowerCase() === 'pseudo') {
       username = $.cookie('username') || 'pseudo';
