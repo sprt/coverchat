@@ -31,7 +31,7 @@
           username: $.cookie('username')
         };
     
-    if (msg.content === '' || msg.username === 'pseudo' ||
+    if (msg.content === '' || msg.username.toLowerCase() === 'pseudo' ||
         msg.username === null) {
       return;
     }
