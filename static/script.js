@@ -44,7 +44,8 @@
   });
   
   $('#username').on('blur keydown', function(e) {
-    if (e.which !== 13 && e.which !== 0) {
+    console.log(e)
+    if (e.type === 'keydown' && e.which !== 13 && e.which !== 0) {
       return;
     }
     
