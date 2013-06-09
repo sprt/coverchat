@@ -28,7 +28,6 @@
     var $search = $('#search'),
         msg = {
           content: $search.val(),
-          socket_id: state.socketId,
           username: $.cookie('username')
         };
     
@@ -41,7 +40,7 @@
     $search.focus();
     
     addMessage(msg);
-    $.post('/messages', msg);
+    channel.trigger('client-message', msg);
   });
   
   $('#username').on('blur keydown', function(e) {
@@ -79,13 +78,9 @@
   });
   
   var pusher = new Pusher('e44daeeff8725fc3f830'),
-      channel = pusher.subscribe('chat');
+      channel = pusher.subscribe('private-chat');
   
-  pusher.connection.bind('connected', function() {
-    state.socketId = pusher.connection.socket_id;
-  });
-  
-  channel.bind('message', function(data) {
+  channel.bind('client-message', function(data) {
     addMessage(data);
   });
 }());
