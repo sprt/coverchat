@@ -64,7 +64,7 @@
       $search.focus();
     }
     
-    if (username !== 'pseudo') {
+    if (username.toLowerCase() !== 'pseudo') {
       $search.attr('disabled', false);
       $search.removeAttr('placeholder');
       $.cookie('username', username, {expires: 365});
