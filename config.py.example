@@ -1,0 +1,3 @@
+PUSHER_APP_ID = 'yourappid'
+PUSHER_KEY = 'yourkey'
+PUSHER_SECRET = 'yoursecret'
